@@ -8,14 +8,16 @@ use strict;
 
 use Carp ( );
 use CGI ( );
+use CGI::Pretty;
 
 
-$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.5 $, 10) - 1;
-my $rcs = '$Id: PrintWrapper.pm,v 1.5 1999/11/19 13:29:31 binkley Exp $';
+$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.8 $, 10) - 1;
+my $rcs = '$Id: PrintWrapper.pm,v 1.8 1999/12/30 13:38:06 binkley Exp $';
 
 
-sub new ($$;$) {
-  my ($this, $h, $cgi_arg) = @_;
+sub new ($$;@) {
+  my ($this, $h, @cgi_args) = @_;
+  @cgi_args = ('') unless @cgi_args;
 
   $h or Carp::croak ('No print handle');
   $h->can ('print') or Carp::croak ("'$h' is not a print handle");
@@ -24,18 +26,28 @@ sub new ($$;$) {
   # Need to create an empty CGI object to avoid CGI trying to read in
   # the parameters -- we are using CGI for printing forms, not for
   # processing scripts:
-  my $cgi = CGI->new ($cgi_arg or '');
+  my $cgi;
+  eval { $cgi = CGI->new (@cgi_args); };
+  $@ and Carp::croak ("Couldn't create CGI object because $@");
 
   bless [$h, $cgi], $class;
 }
 
-sub io ($) {
-  shift->[0];
+sub io ($;$) {
+  if (scalar @_ == 1) {
+    $_[0]->[0];
+  } else {
+    $_[0]->[0] = $_[1];
+  }
 }
 
 # Modify CGI without printing:
-sub cgi ($) {
-  shift->[1];
+sub cgi ($;$) {
+  if (scalar @_ == 1) {
+    $_[0]->[1];
+  } else {
+    $_[0]->[1] = $_[1];
+  }
 }
 
 sub AUTOLOAD {
@@ -43,6 +55,8 @@ sub AUTOLOAD {
 
   my $sub = $CGI::PrintWrapper::AUTOLOAD;
   $sub =~ s/.*:://; # strip package
+  # We don't particularly want to print this:  :-)
+  return if $sub eq 'DESTROY';
 
   # Fixup our call to invoke the same-named CGI function, but to print
   # the resulting string to our handle.  Update our symbol table so
@@ -52,8 +66,9 @@ sub AUTOLOAD {
   # scoping):
   *{$CGI::PrintWrapper::AUTOLOAD} = sub {
     my $self = shift;
+    my $cgi_sub = "CGI::$sub";
 
-    $self->[0]->print (&{"CGI::$sub"} ($self->[1], @_));
+    $self->[0]->print ($self->[1]->$cgi_sub (@_));
 
     return $self;
   };
@@ -77,6 +92,9 @@ CGI::PrintWrapper - CGI methods output to a print handle
     use IO::Scalar; # just an example
     use HTML::Stream; # continuing the example
 
+    # Fine, there really is no such tag as "WEAK":
+    HTML::Stream->accept_tag ('WEAK');
+
     my $content = '';
     my $handle = IO::Scalar->new (\$content);
     my $cgi = CGI::PrintHandle ($handle);
@@ -84,19 +102,20 @@ CGI::PrintWrapper - CGI methods output to a print handle
 
     # Not a very exciting example:
     $cgi->start_form;
-    $html->STRONG->t ('I am a form.')->_STRONG;
+    $html->WEAK->t ('I am form: hear me submit.')->_WEAK;
     $cgi->submit;
     $cgi->end_form;
 
     print "$content\n";
 <FORM METHOD="POST"  ENCTYPE="application/x-www-form-urlencoded">
-<STRONG>I am a form.</STRONG><INPUT TYPE="submit" NAME=".submit"></FORM>
+<WEAK>I am form: hear me submit.</WEAK><INPUT TYPE="submit" NAME=".submit"></FORM>
 
 =head1 DESCRIPTION
 
 B<CGI::PrintWrapper> arranges for CGI methods to output their results
 by printing onto an arbitrary handle.  This gets around the problem
-that the B<CGI>'s subs return strings.
+that the B<CGI>'s subs return strings, which may be inconvient when
+you wish to use B<CGI> for something besides CGI script processing.
 
 You could just call C<print> yourself on the appropriate file handle,
 but there are many contexts in which it is cleaner to provide the
@@ -111,10 +130,16 @@ method.
 
 =over
 
-=item C<new($h)>
+=item C<new ($h)>
 
 Creates a new B<CGI::PrintWrapper>, printing the results of B<CGI>
 methods onto the print handle object, C<$h>.
+
+=item C<new ($h, @cgi_args)>
+
+Creates a new B<CGI::PrintWrapper>, printing the results of B<CGI>
+methods onto the print handle object, C<$h>, and using the additional
+arguments to construct the B<CGI> object.
 
 =back
 
@@ -122,23 +147,25 @@ methods onto the print handle object, C<$h>.
 
 =over
 
-=item C<io()>
-
-Returns the underlying print handle object.
-
-=item C<cgi()>
+=item C<cgi ( )>
 
 Returns the underlying CGI object.  This is handy for invoking methods
 on the object whose result you do not wish to print, such as
 C<param()>.
 
+=item C<io ( )>
+
+Returns the underlying print handle object.
+
 =item C<AUTOLOAD>
 
-Initially, C<CGI::PrintWrapper> has no methods (except C<io>).  As the
-caller invokes B<CGI> methods, C<AUTOLOAD> creates anonymous
-subroutines to perform the actual B<CGI> method call and print the
-results with the print handle object.  It also updates the symbol
-table so that future calls can bypass C<AUTOLOAD>.
+Initially, B<CGI::PrintWrapper> has no methods (except as mentioned
+above).  As the caller invokes B<CGI> methods, C<AUTOLOAD> creates
+anonymous subroutines to perform the actual B<CGI> method call
+indirection and print the results with the print handle object.  It
+also updates the symbol table for B<CGI::PrintWrapper> so that future
+calls can bypass C<AUTOLOAD>.  This makes a B<CGI::PrintWrapper>
+object transparently a B<CGI> object, usable as a drop-in replacement.
 
 =back
 
@@ -147,13 +174,14 @@ table so that future calls can bypass C<AUTOLOAD>.
 L<CGI>, L<IO::Scalar>, L<HTML::Stream>, L<perlfunc/print>
 
 B<CGI> is the canonical package for working with fill-out forms on the
-web.
+web.  It is particularly useful for generating HTML for such forms.
 
 B<IO::Scalar> is a handy package for treating a string as an object
 supporting IO handle semantics.
 
 B<HTML::Stream> is a nice package for writing HTML markup and content
-into an IO handle with stream semantics.
+into an IO handle with stream semantics.  It's main drawback is lack
+of support for HTML 4.0.
 
 =head1 DIAGNOSTICS
 
@@ -166,18 +194,32 @@ are fatal (invoke C<Carp::croak>).
 =item No print handle
 
 (F) The caller tried to create a new C<CGI::PrintWrapper> without
-supplying an object which supports C<print>.
+supplying the mandatory first argument, a print handle:
+
+    $cgi = CGI::PrintWrapper->new;
 
 =item '%s' is not a print handle
 
 (F) The caller tried to create a new C<CGI::PrintWrapper> using an
-object which does not support C<print>.
+object which does not support C<print> as the mandatory first
+argument.
+
+=item Couldn't create CGI object because %s
+
+(F) The caller tried to create a new C<CGI::PrintWrapper> using bad
+addtional arguments to the constructor for B<CGI>.
 
 =back
 
 =head1 BUGS AND CAVEATS
 
-So far, none, but you never know.  I<Caveat emptor.>
+There is no way of controlling now to C<use> B<CGI>, for example, if
+you wished to precompile all the methods.  Instead, you should make
+the appropriate call to C<use> yourself for B<CGI>, in addition to
+that for B<CGI::PrintWrapper>, thus:
+
+    use CGI qw(:compile);
+    use CGI::PrintWrapper;
 
 =head1 AUTHORS
 
@@ -187,7 +229,7 @@ this package for public consumption.
 
 =head1 COPYRIGHT
 
-  $Id: PrintWrapper.pm,v 1.5 1999/11/19 13:29:31 binkley Exp $
+  $Id: PrintWrapper.pm,v 1.8 1999/12/30 13:38:06 binkley Exp $
 
   Copyright 1999, B. K. Oxley (binkley).
 
