@@ -1,0 +1,202 @@
+0000000   N   A   M   E  \n                   C   G   I   :   :   P   r
+0000020   i   n   t   W   r   a   p   p   e   r       -       C   G   I
+0000040       m   e   t   h   o   d   s       o   u   t   p   u   t    
+0000060   t   o       a       p   r   i   n   t       h   a   n   d   l
+0000100   e  \n  \n   S   Y   N   O   P   S   I   S  \n                
+0000120                   u   s   e       C   G   I   :   :   P   r   i
+0000140   n   t   H   a   n   d   l   e   ;  \n                        
+0000160           u   s   e       I   O   :   :   S   c   a   l   a   r
+0000200   ;       #       j   u   s   t       a   n       e   x   a   m
+0000220   p   l   e  \n                                   u   s   e    
+0000240   H   T   M   L   :   :   S   t   r   e   a   m   ;       #    
+0000260   c   o   n   t   i   n   u   i   n   g       t   h   e       e
+0000300   x   a   m   p   l   e  \n  \n                                
+0000320   m   y       $   c   o   n   t   e   n   t       =       '   '
+0000340   ;  \n                                   m   y       $   h   a
+0000360   n   d   l   e       =       I   O   :   :   S   c   a   l   a
+0000400   r   -   >   n   e   w       (   \   $   c   o   n   t   e   n
+0000420   t   )   ;  \n                                   m   y       $
+0000440   c   g   i       =       C   G   I   :   :   P   r   i   n   t
+0000460   H   a   n   d   l   e       (   $   h   a   n   d   l   e   )
+0000500   ;  \n                                   m   y       $   h   t
+0000520   m   l       =       H   T   M   L   :   :   S   t   r   e   a
+0000540   m   -   >   n   e   w       (   $   h   a   n   d   l   e   )
+0000560   ;  \n  \n                                   #       N   o   t
+0000600       a       v   e   r   y       e   x   c   i   t   i   n   g
+0000620       e   x   a   m   p   l   e   :  \n                        
+0000640           $   c   g   i   -   >   s   t   a   r   t   _   f   o
+0000660   r   m   ;  \n                                   $   h   t   m
+0000700   l   -   >   S   T   R   O   N   G   -   >   t       (   '   I
+0000720       a   m       a       f   o   r   m   .   '   )   -   >   _
+0000740   S   T   R   O   N   G   ;  \n                                
+0000760   $   c   g   i   -   >   s   u   b   m   i   t   ;  \n        
+0001000                           $   c   g   i   -   >   e   n   d   _
+0001020   f   o   r   m   ;  \n  \n                                   p
+0001040   r   i   n   t       "   $   c   o   n   t   e   n   t   \   n
+0001060   "   ;  \n                   <   F   O   R   M       M   E   T
+0001100   H   O   D   =   "   P   O   S   T   "           E   N   C   T
+0001120   Y   P   E   =   "   a   p   p   l   i   c   a   t   i   o   n
+0001140   /   x   -   w   w   w   -   f   o   r   m   -   u   r   l   e
+0001160   n   c   o   d   e   d   "   >  \n                   <   S   T
+0001200   R   O   N   G   >   I       a   m       a       f   o   r   m
+0001220   .   <   /   S   T   R   O   N   G   >   <   I   N   P   U   T
+0001240       T   Y   P   E   =   "   s   u   b   m   i   t   "       N
+0001260   A   M   E   =   "   .   s   u   b   m   i   t   "   >   <   /
+0001300   F   O   R   M   >  \n  \n   D   E   S   C   R   I   P   T   I
+0001320   O   N  \n                   C   G   I   :   :   P   r   i   n
+0001340   t   W   r   a   p   p   e   r       a   r   r   a   n   g   e
+0001360   s       f   o   r       C   G   I       m   e   t   h   o   d
+0001400   s       t   o       o   u   t   p   u   t       t   h   e   i
+0001420   r       r   e   s   u   l   t   s       b   y  \n            
+0001440       p   r   i   n   t   i   n   g       o   n   t   o       a
+0001460   n       a   r   b   i   t   r   a   r   y       h   a   n   d
+0001500   l   e   .       T   h   i   s       g   e   t   s       a   r
+0001520   o   u   n   d       t   h   e       p   r   o   b   l   e   m
+0001540       t   h   a   t       t   h   e  \n                   C   G
+0001560   I   '   s       s   u   b   s       r   e   t   u   r   n    
+0001600   s   t   r   i   n   g   s   .  \n  \n                   Y   o
+0001620   u       c   o   u   l   d       j   u   s   t       c   a   l
+0001640   l       `   p   r   i   n   t   '       y   o   u   r   s   e
+0001660   l   f       o   n       t   h   e       a   p   p   r   o   p
+0001700   r   i   a   t   e       f   i   l   e       h   a   n   d   l
+0001720   e   ,       b   u   t  \n                   t   h   e   r   e
+0001740       a   r   e       m   a   n   y       c   o   n   t   e   x
+0001760   t   s       i   n       w   h   i   c   h       i   t       i
+0002000   s       c   l   e   a   n   e   r       t   o       p   r   o
+0002020   v   i   d   e       t   h   e       e   x   t   r   a  \n    
+0002040               a   b   s   t   r   a   c   t   i   o   n       (
+0002060   s   u   c   h       a   s       m   i   x   i   n   g       C
+0002100   G   I       w   i   t   h       H   T   M   L   :   :   S   t
+0002120   r   e   a   m   ,       t   h   e       p   r   o   b   l   e
+0002140   m       w   h   i   c   h  \n                   p   r   o   m
+0002160   p   t   e   d       m   y       s   o   l   u   t   i   o   n
+0002200   ,       i   l   l   u   s   t   r   a   t   e   d       a   b
+0002220   o   v   e   )   .  \n  \n                   C   G   I   :   :
+0002240   P   r   i   n   t   W   r   a   p   p   e   r       c   r   e
+0002260   a   t   e   s       t   h   e       n   e   c   e   s   s   a
+0002300   r   y       c   a   l   l   b   a   c   k   s       f   o   r
+0002320       p   r   i   n   t   i   n   g  \n                   d   y
+0002340   n   a   m   i   c   a   l   l   y   ,       u   p   d   a   t
+0002360   i   n   g       t   h   e       s   y   m   b   o   l       t
+0002400   a   b   l   e       a   s       i   t       e   n   c   o   u
+0002420   n   t   e   r   s       a       n   e   w       C   G   I  \n
+0002440                   m   e   t   h   o   d   .  \n  \n   C   O   N
+0002460   S   T   R   U   C   T   O   R  \n                   `   n   e
+0002500   w   (   $   h   )   '  \n                                   C
+0002520   r   e   a   t   e   s       a       n   e   w       C   G   I
+0002540   :   :   P   r   i   n   t   W   r   a   p   p   e   r   ,    
+0002560   p   r   i   n   t   i   n   g       t   h   e       r   e   s
+0002600   u   l   t   s       o   f       C   G   I       m   e   t   h
+0002620   o   d   s  \n                                   o   n   t   o
+0002640       t   h   e       p   r   i   n   t       h   a   n   d   l
+0002660   e       o   b   j   e   c   t   ,       `   $   h   '   .  \n
+0002700  \n   M   E   T   H   O   D   S  \n                   `   i   o
+0002720   (   )   '  \n                                   R   e   t   u
+0002740   r   n   s       t   h   e       u   n   d   e   r   l   y   i
+0002760   n   g       p   r   i   n   t       h   a   n   d   l   e    
+0003000   o   b   j   e   c   t   .  \n  \n                   `   A   U
+0003020   T   O   L   O   A   D   '  \n                                
+0003040   I   n   i   t   i   a   l   l   y   ,       `   C   G   I   :
+0003060   :   P   r   i   n   t   W   r   a   p   p   e   r   '       h
+0003100   a   s       n   o       m   e   t   h   o   d   s       (   e
+0003120   x   c   e   p   t       `   i   o   '   )   .       A   s    
+0003140   t   h   e  \n                                   c   a   l   l
+0003160   e   r       i   n   v   o   k   e   s       C   G   I       m
+0003200   e   t   h   o   d   s   ,       `   A   U   T   O   L   O   A
+0003220   D   '       c   r   e   a   t   e   s       a   n   o   n   y
+0003240   m   o   u   s       s   u   b   r   o   u   t   i   n   e   s
+0003260  \n                                   t   o       p   e   r   f
+0003300   o   r   m       t   h   e       a   c   t   u   a   l       C
+0003320   G   I       m   e   t   h   o   d       c   a   l   l       a
+0003340   n   d       p   r   i   n   t       t   h   e       r   e   s
+0003360   u   l   t   s       w   i   t   h       t   h   e  \n        
+0003400                           p   r   i   n   t       h   a   n   d
+0003420   l   e       o   b   j   e   c   t   .       I   t       a   l
+0003440   s   o       u   p   d   a   t   e   s       t   h   e       s
+0003460   y   m   b   o   l       t   a   b   l   e       s   o       t
+0003500   h   a   t       f   u   t   u   r   e  \n                    
+0003520               c   a   l   l   s       c   a   n       b   y   p
+0003540   a   s   s       `   A   U   T   O   L   O   A   D   '   .  \n
+0003560  \n   S   E   E       A   L   S   O  \n                   t   h
+0003600   e       C   G   I       m   a   n   p   a   g   e   ,       t
+0003620   h   e       I   O   :   :   S   c   a   l   a   r       m   a
+0003640   n   p   a   g   e   ,       t   h   e       H   T   M   L   :
+0003660   :   S   t   r   e   a   m       m   a   n   p   a   g   e   ,
+0003700       t   h   e  \n                   p   r   i   n   t       e
+0003720   n   t   r   y       i   n       t   h   e       p   e   r   l
+0003740   f   u   n   c       m   a   n   p   a   g   e  \n  \n        
+0003760           C   G   I       i   s       t   h   e       c   a   n
+0004000   o   n   i   c   a   l       p   a   c   k   a   g   e       f
+0004020   o   r       w   o   r   k   i   n   g       w   i   t   h    
+0004040   f   i   l   l   -   o   u   t       f   o   r   m   s       o
+0004060   n       t   h   e       w   e   b   .  \n  \n                
+0004100   I   O   :   :   S   c   a   l   a   r       i   s       a    
+0004120   h   a   n   d   y       p   a   c   k   a   g   e       f   o
+0004140   r       t   r   e   a   t   i   n   g       a       s   t   r
+0004160   i   n   g       a   s       a   n       o   b   j   e   c   t
+0004200  \n                   s   u   p   p   o   r   t   i   n   g    
+0004220   I   O       h   a   n   d   l   e       s   e   m   a   n   t
+0004240   i   c   s   .  \n  \n                   H   T   M   L   :   :
+0004260   S   t   r   e   a   m       i   s       a       n   i   c   e
+0004300       p   a   c   k   a   g   e       f   o   r       w   r   i
+0004320   t   i   n   g       H   T   M   L       m   a   r   k   u   p
+0004340       a   n   d       c   o   n   t   e   n   t       i   n   t
+0004360   o  \n                   a   n       I   O       h   a   n   d
+0004400   l   e       w   i   t   h       s   t   r   e   a   m       s
+0004420   e   m   a   n   t   i   c   s   .  \n  \n   D   I   A   G   N
+0004440   O   S   T   I   C   S  \n                   T   h   e       f
+0004460   o   l   l   o   w   i   n   g       a   r   e       t   h   e
+0004500       d   i   a   g   n   o   s   t   i   c   s       g   e   n
+0004520   e   r   a   t   e   d       b   y       C   l   a   s   s   :
+0004540   :   C   l   a   s   s   .       I   t   e   m   s  \n        
+0004560           m   a   r   k   e   d       "   (   W   )   "       a
+0004600   r   e       n   o   n   -   f   a   t   a   l       (   i   n
+0004620   v   o   k   e       `   C   a   r   p   :   :   c   a   r   p
+0004640   '   )   ;       t   h   o   s   e       m   a   r   k   e   d
+0004660       "   (   F   )   "       a   r   e  \n                   f
+0004700   a   t   a   l       (   i   n   v   o   k   e       `   C   a
+0004720   r   p   :   :   c   r   o   a   k   '   )   .  \n  \n        
+0004740           N   o       p   r   i   n   t       h   a   n   d   l
+0004760   e  \n                                   (   F   )       T   h
+0005000   e       c   a   l   l   e   r       t   r   i   e   d       t
+0005020   o       c   r   e   a   t   e       a       n   e   w       `
+0005040   C   G   I   :   :   P   r   i   n   t   W   r   a   p   p   e
+0005060   r   '       w   i   t   h   o   u   t  \n                    
+0005100               s   u   p   p   l   y   i   n   g       a   n    
+0005120   o   b   j   e   c   t       w   h   i   c   h       s   u   p
+0005140   p   o   r   t   s       `   p   r   i   n   t   '   .  \n  \n
+0005160                   '   %   s   '       i   s       n   o   t    
+0005200   a       p   r   i   n   t       h   a   n   d   l   e  \n    
+0005220                               (   F   )       T   h   e       c
+0005240   a   l   l   e   r       t   r   i   e   d       t   o       c
+0005260   r   e   a   t   e       a       n   e   w       `   C   G   I
+0005300   :   :   P   r   i   n   t   W   r   a   p   p   e   r   '    
+0005320   u   s   i   n   g       a   n  \n                            
+0005340       o   b   j   e   c   t       w   h   i   c   h       d   o
+0005360   e   s       n   o   t       s   u   p   p   o   r   t       `
+0005400   p   r   i   n   t   '   .  \n  \n   B   U   G   S       A   N
+0005420   D       C   A   V   E   A   T   S  \n                   S   o
+0005440       f   a   r   ,       n   o   n   e   ,       b   u   t    
+0005460   y   o   u       n   e   v   e   r       k   n   o   w   .    
+0005500   *   C   a   v   e   a   t       e   m   p   t   o   r   .   *
+0005520  \n  \n   A   U   T   H   O   R   S  \n                   B   .
+0005540       K   .       O   x   l   e   y       (   b   i   n   k   l
+0005560   e   y   )       a   t       H   o   m   e       <   b   i   n
+0005600   k   l   e   y   @   b   i   g   f   o   o   t   .   c   o   m
+0005620   >  \n  \n   C   O   P   Y   R   I   G   H   T  \n            
+0005640               $   I   d   :       P   r   i   n   t   W   r   a
+0005660   p   p   e   r   .   p   m   ,   v       1   .   3       1   9
+0005700   9   9   /   1   1   /   1   5       2   0   :   5   6   :   1
+0005720   8       b   i   n   k   l   e   y       E   x   p       $  \n
+0005740  \n                           C   o   p   y   r   i   g   h   t
+0005760       1   9   9   9   ,       B   .       K   .       O   x   l
+0006000   e   y       (   b   i   n   k   l   e   y   )   .  \n  \n    
+0006020               T   h   i   s       l   i   b   r   a   r   y    
+0006040   i   s       f   r   e   e       s   o   f   t   w   a   r   e
+0006060   ;       y   o   u       m   a   y       r   e   d   i   s   t
+0006100   r   i   b   u   t   e       i   t       a   n   d   /   o   r
+0006120       m   o   d   i   f   y       i   t  \n                   u
+0006140   n   d   e   r       t   h   e       s   a   m   e       t   e
+0006160   r   m   s       a   s       P   e   r   l       i   t   s   e
+0006200   l   f   .  \n  \n
+0006205
