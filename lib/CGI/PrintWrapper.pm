@@ -10,12 +10,12 @@ use Carp ( );
 use CGI ( );
 
 
-$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.4 $, 10) - 1;
-my $rcs = '$Id: PrintWrapper.pm,v 1.4 1999/11/18 20:48:00 binkley Exp $';
+$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.5 $, 10) - 1;
+my $rcs = '$Id: PrintWrapper.pm,v 1.5 1999/11/19 13:29:31 binkley Exp $';
 
 
-sub new ($$) {
-  my ($this, $h) = @_;
+sub new ($$;$) {
+  my ($this, $h, $cgi_arg) = @_;
 
   $h or Carp::croak ('No print handle');
   $h->can ('print') or Carp::croak ("'$h' is not a print handle");
@@ -24,13 +24,18 @@ sub new ($$) {
   # Need to create an empty CGI object to avoid CGI trying to read in
   # the parameters -- we are using CGI for printing forms, not for
   # processing scripts:
-  my $cgi = CGI->new ('');
+  my $cgi = CGI->new ($cgi_arg or '');
 
   bless [$h, $cgi], $class;
 }
 
 sub io ($) {
   shift->[0];
+}
+
+# Modify CGI without printing:
+sub cgi ($) {
+  shift->[1];
 }
 
 sub AUTOLOAD {
@@ -121,6 +126,12 @@ methods onto the print handle object, C<$h>.
 
 Returns the underlying print handle object.
 
+=item C<cgi()>
+
+Returns the underlying CGI object.  This is handy for invoking methods
+on the object whose result you do not wish to print, such as
+C<param()>.
+
 =item C<AUTOLOAD>
 
 Initially, C<CGI::PrintWrapper> has no methods (except C<io>).  As the
@@ -176,7 +187,7 @@ this package for public consumption.
 
 =head1 COPYRIGHT
 
-  $Id: PrintWrapper.pm,v 1.4 1999/11/18 20:48:00 binkley Exp $
+  $Id: PrintWrapper.pm,v 1.5 1999/11/19 13:29:31 binkley Exp $
 
   Copyright 1999, B. K. Oxley (binkley).
 
