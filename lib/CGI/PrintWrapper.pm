@@ -10,8 +10,8 @@ use Carp ( );
 use CGI ( );
 
 
-$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.3 $, 10) - 1;
-my $rcs = '$Id: PrintWrapper.pm,v 1.3 1999/11/15 20:56:18 binkley Exp $';
+$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.4 $, 10) - 1;
+my $rcs = '$Id: PrintWrapper.pm,v 1.4 1999/11/18 20:48:00 binkley Exp $';
 
 
 sub new ($$) {
@@ -170,11 +170,13 @@ So far, none, but you never know.  I<Caveat emptor.>
 
 =head1 AUTHORS
 
-B. K. Oxley (binkley) at Home E<lt>binkley@bigfoot.comE<gt>
+B. K. Oxley (binkley) at Home E<lt>binkley@bigfoot.comE<gt>.  I am
+grateful to my employer, DataCraft, Inc., for time spent preparing
+this package for public consumption.
 
 =head1 COPYRIGHT
 
-  $Id: PrintWrapper.pm,v 1.3 1999/11/15 20:56:18 binkley Exp $
+  $Id: PrintWrapper.pm,v 1.4 1999/11/18 20:48:00 binkley Exp $
 
   Copyright 1999, B. K. Oxley (binkley).
 
