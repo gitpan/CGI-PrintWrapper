@@ -16,7 +16,7 @@ my ($cgi, $s);
 
 # Test 1, 2:
 eval {
-  $cgi = CGI::PrintWrapper->new (CGI::PrintWrapper::IO->new);
+  $cgi = CGI::PrintWrapper->new (CGI::PrintWrapper::IO->new, '');
 };
 ok (not $@);
 ok ($cgi);
@@ -30,7 +30,7 @@ ok ($s, '<UL></UL>');
 
 # Test 4:
 eval {
-  $cgi = CGI::PrintWrapper->new (CGI::PrintWrapper::IO->new);
+  $cgi = CGI::PrintWrapper->new (CGI::PrintWrapper::IO->new, '');
   $cgi->cgi->param (fred => 'barney');
   $cgi->cgi->param (wilma => qw(betty bam-bam dino));
   $cgi->as_string;

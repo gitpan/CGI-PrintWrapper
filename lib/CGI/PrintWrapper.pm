@@ -6,26 +6,38 @@ package CGI::PrintWrapper;
 
 use strict;
 
+# Catch our use statement so that we can pass import settings on to
+# CGI:
+sub import ($;@) {
+  my ($package, @args) = @_;
+
+  #use CGI (@args);
+  CGI->import (@args);
+  # NB -- we can't use the more interesting "goto &CGI::import" idiom
+  # here because we'd need to patch up @_, and the import method is
+  # usually invoked from a "use CGI::PrintWrapper" call, during which
+  # you cannot modify @_.  Go figure.  --bko FIXME
+}
+
 use Carp ( );
 use CGI ( );
 use CGI::Pretty;
 
 
-$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.8 $, 10) - 1;
-my $rcs = '$Id: PrintWrapper.pm,v 1.8 1999/12/30 13:38:06 binkley Exp $';
+$CGI::PrintWrapper::VERSION = (substr q$Revision: 1.11 $, 10) - 1;
+my $rcs = '$Id: PrintWrapper.pm,v 1.11 2000/01/07 16:40:24 binkley Exp $';
 
 
 sub new ($$;@) {
   my ($this, $h, @cgi_args) = @_;
-  @cgi_args = ('') unless @cgi_args;
+  # This isn't nice to change the semantics if this is to be a CGI
+  # drop-in replacement:
+  #@cgi_args = ('') unless @cgi_args;
 
   $h or Carp::croak ('No print handle');
   $h->can ('print') or Carp::croak ("'$h' is not a print handle");
 
   my $class = ref ($this) || $this;
-  # Need to create an empty CGI object to avoid CGI trying to read in
-  # the parameters -- we are using CGI for printing forms, not for
-  # processing scripts:
   my $cgi;
   eval { $cgi = CGI->new (@cgi_args); };
   $@ and Carp::croak ("Couldn't create CGI object because $@");
@@ -50,13 +62,23 @@ sub cgi ($;$) {
   }
 }
 
+sub DESTROY {
+  my ($self) = @_;
+
+  # First, clean up IO:
+  $self->[0]->DESTROY
+    if UNIVERSAL::can ($self->[0], 'DESTROY');
+
+  # Next, goto CGI's DESTROY if possible:
+  $_[0] = $self->[1];
+  goto &CGI::DESTROY;
+}
+
 sub AUTOLOAD {
   no strict qw(refs);
 
   my $sub = $CGI::PrintWrapper::AUTOLOAD;
   $sub =~ s/.*:://; # strip package
-  # We don't particularly want to print this:  :-)
-  return if $sub eq 'DESTROY';
 
   # Fixup our call to invoke the same-named CGI function, but to print
   # the resulting string to our handle.  Update our symbol table so
@@ -97,7 +119,7 @@ CGI::PrintWrapper - CGI methods output to a print handle
 
     my $content = '';
     my $handle = IO::Scalar->new (\$content);
-    my $cgi = CGI::PrintHandle ($handle);
+    my $cgi = CGI::PrintHandle ($handle, '');
     my $html = HTML::Stream->new ($handle);
 
     # Not a very exciting example:
@@ -133,7 +155,13 @@ method.
 =item C<new ($h)>
 
 Creates a new B<CGI::PrintWrapper>, printing the results of B<CGI>
-methods onto the print handle object, C<$h>.
+methods onto the print handle object, C<$h>.  Because of the semantics
+of B<CGI>'s own C<new> method, this form of new is mostly useful in
+CGI scripts, as it will attempt to read from C<STDIN>.  To prevent
+this behavior, call the next form of C<new> with an empty string,
+thus:
+
+    my $cgi = CGI::PrintWrapper->new ($some_handle, '');
 
 =item C<new ($h, @cgi_args)>
 
@@ -229,7 +257,7 @@ this package for public consumption.
 
 =head1 COPYRIGHT
 
-  $Id: PrintWrapper.pm,v 1.8 1999/12/30 13:38:06 binkley Exp $
+  $Id: PrintWrapper.pm,v 1.11 2000/01/07 16:40:24 binkley Exp $
 
   Copyright 1999, B. K. Oxley (binkley).
 

@@ -22,7 +22,7 @@ ok ($io);
 
 # Test 5, 6:
 my $cgi;
-eval { $cgi = CGI::PrintWrapper->new ($io); };
+eval { $cgi = CGI::PrintWrapper->new ($io, ''); };
 ok (not $@);
 ok ($cgi);
 

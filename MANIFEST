@@ -7,3 +7,4 @@ lib/CGI/PrintWrapper.pm
 t/01load.t
 t/02print.t
 t/03args.t
+t/04import.t
